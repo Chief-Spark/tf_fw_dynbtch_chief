@@ -1,0 +1,15 @@
+procesos:
+  directorio:
+    ruta: PP0743
+  niveles:
+    - nivel: 1
+      descripcion: "Ejecución de unloads de global indebtedness"
+      procedimientos:
+        - step_name: "unload_globalindebtedness_quarter"
+          step_procedure: bdm_datos.sp_unload_globalindebtedness_quarter
+          step_description: "Ejecuta el unload global indebtedness quarter."
+        - step_name: "unload_globalindebtedness_qp"
+          step_procedure: bdm_datos.sp_unload_globalindebtedness_qp
+          step_description: "Ejecuta el unload global indebtedness qp."  
+  salidas:
+    aplica: false

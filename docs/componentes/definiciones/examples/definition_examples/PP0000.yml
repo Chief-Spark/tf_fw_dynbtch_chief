@@ -1,0 +1,15 @@
+procesos:
+  directorio:
+    ruta: PP0000dummyProcess
+  niveles:
+    - nivel: 1
+      descripcion: "Devuelve parametros de entrada"
+      procedimientos:
+        - step_name: "Crear tabla insumo"
+          step_procedure: bdm_datos.sp_pp0742_salida
+          step_description: "Devuelve parametros de entrada"
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: false

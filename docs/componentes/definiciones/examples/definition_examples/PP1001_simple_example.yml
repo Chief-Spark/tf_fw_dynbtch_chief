@@ -1,0 +1,29 @@
+# Ejemplo de Proceso Simple - Carga y Exportación
+# Proceso: PP1001 - Reporte Simple de Clientes
+# Descripción: Proceso básico que carga datos de clientes y genera reporte
+
+procesos:
+  directorio:
+    ruta: PP1001reportesimple
+  niveles:
+    - nivel: 1
+      descripcion: "Carga de datos de clientes"
+      procedimientos:
+        - step_name: "Cargar datos principales"
+          step_procedure: bdm_datos.sp_cargar_validos
+          step_description: "Carga datos del archivo .val con información de clientes"
+    - nivel: 2
+      descripcion: "Generar reporte de salida"
+      procedimientos:
+        - step_name: "Exportar reporte clientes"
+          step_procedure: bdm_datos.unload_reporte_clientes_to_s3
+          step_description: "Exporta reporte consolidado de clientes a S3"
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: true
+    carpetas:
+      - origen: (PP1001)()(REPORTE_CLIENTES)
+        cabeceras: true
+        formato: csv

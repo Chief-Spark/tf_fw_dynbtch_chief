@@ -1,0 +1,139 @@
+version: 1.0.4
+global:
+  application: 26099-Procesos-Especiales-Batch-AWS
+  tech: terraform
+  language: terraform
+  jdk: 8
+  # Código translator (Lambdas, layer, frontend ECR/ECS): tf_trnsltr_btch (scripts/deploy.py).
+  # Este repo solo despliega infra Terraform + layer batch common_python_dependencies.
+develop:
+  before_build:
+    cmd:
+      script: |
+        echo "=== INSTALANDO DEPENDENCIAS EN LAMBDAS ==="
+        sh scripts/install-lambda-deps.sh
+    checkmarx:
+      projectNameCx: SCPEBA/EITS SLA CO PROCESOS ESPECIALES BATCH AWS/tf_fw_dynbtch
+  build:
+    zip:
+      zipFile: eec-aws-us-eits-procesosbatch-dev.zip
+  after_build:
+    sonarQubeScan:
+      skip: true
+      sources: .
+      projectKey: SP-LATAM:EITS:DevSecOps:26099_Procesos-Especiales-Batch-AWS
+      projectName: SP-LATAM:EITS:DevSecOps:26099_Procesos-Especiales-Batch-AWS
+      projectVersion: 1
+      terraform.provider.aws.version: 5.51.1
+  before_deploy:
+    cmd: |-
+      cp trunk/* develop/
+  deploy:
+    terraform:
+      accountid: 651706752126
+      tfVersion: 1.9.0
+qa:
+  before_build:
+    cmd:
+      script: |
+        echo "=== INSTALANDO DEPENDENCIAS EN LAMBDAS ==="
+        sh scripts/install-lambda-deps.sh
+    checkmarx:
+      projectNameCx: SCPEBA/EITS SLA CO PROCESOS ESPECIALES BATCH AWS/tf_fw_dynbtch
+  build:
+    zip:
+      zipFile: eec-aws-us-eits-procesosbatch-qa.zip
+  after_build:
+    sonarQubeScan:
+      sources: .
+      projectKey: SP-LATAM:EITS:DevSecOps:26099_Procesos-Especiales-Batch-AWS
+      projectName: SP-LATAM:EITS:DevSecOps:26099_Procesos-Especiales-Batch-AWS
+      projectVersion: 1
+      terraform.provider.aws.version: 5.51.1
+  before_deploy:
+    cmd: |-
+      cp trunk/* qa/
+  deploy:
+    terraform:
+      accountid: 124355679563
+      tfVersion: 1.9.0
+demo:
+  before_build:
+    cmd:
+      script: |
+        echo "=== INSTALANDO DEPENDENCIAS EN LAMBDAS ==="
+        sh scripts/install-lambda-deps.sh
+  build:
+    zip:
+      zipFile: eec-aws-us-eits-procesosbatch-demo.zip
+  before_deploy:
+    cmd: |-
+      cp trunk/* demo/
+  deploy:
+    terraform:
+      accountid: 311141534073
+      tfVersion: 1.9.0
+production:
+  before_build:
+    cmd:
+      script: |
+        echo "=== INSTALANDO DEPENDENCIAS EN LAMBDAS ==="
+        sh scripts/install-lambda-deps.sh
+  build:
+    zip:
+      zipFile: eec-aws-us-eits-procesosbatch-production.zip
+  before_deploy:
+    cmd: |-
+      cp trunk/* production/
+  deploy:
+    terraform:
+      accountid: 324037294240
+      tfVersion: 1.9.0
+qa_rllbck:
+  before_build:
+    cmd:
+      script: |
+        echo "=== INSTALANDO DEPENDENCIAS EN LAMBDAS ==="
+        sh scripts/install-lambda-deps.sh
+  build:
+    zip:
+      zipFile: eec-aws-us-eits-procesosbatch-qa.zip
+  before_deploy:
+    cmd: |-
+      cp trunk/* qa/
+  deploy:
+    terraform:
+      accountid: 124355679563
+      tfVersion: 1.9.0
+demo_rllbck:
+  before_build:
+    cmd:
+      script: |
+        echo "=== INSTALANDO DEPENDENCIAS EN LAMBDAS ==="
+        sh scripts/install-lambda-deps.sh
+  build:
+    zip:
+      zipFile: eec-aws-us-eits-procesosbatch-demo.zip
+  before_deploy:
+    cmd: |-
+      cp trunk/* demo/
+  deploy:
+    terraform:
+      accountid: 311141534073
+      tfVersion: 1.9.0
+production_rllbck:
+  before_build:
+    cmd:
+      script: |
+        echo "=== INSTALANDO DEPENDENCIAS EN LAMBDAS ==="
+        sh scripts/install-lambda-deps.sh
+  build:
+    zip:
+      zipFile: eec-aws-us-eits-procesosbatch-production.zip
+  before_deploy:
+    cmd: |-
+      cp trunk/* production/
+  deploy:
+    terraform:
+      accountid: 324037294240
+      tfVersion: 1.9.0

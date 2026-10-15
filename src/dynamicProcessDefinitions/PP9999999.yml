@@ -1,0 +1,13 @@
+procesos:
+  pipeline: RECONOCER   
+  directorio:
+    ruta: PP9999999
+  niveles:
+    - nivel: 1
+      descripcion: "Prueba 1"
+      procedimientos:
+        - step_name: "prueba_1"
+          step_procedure: bdm_datos.sp_unificacion_r1_esc1_ciiu10()
+          step_description: "Prueba 1"
+  salidas:
+    aplica: false

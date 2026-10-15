@@ -1,0 +1,8 @@
+tipo_id;numero_id;peer_group;cod_tipo_cta_fte;fecha_apertura;fecha_periodos;fecha_vencimiento;vector;valor_inicial;valor_saldo;valor_saldo_mora;valor_cuota_mensual;periodicidad;num_cuotas_pagadas;cod_tipo_obligacion_fte;cod_tipo_rel_con_cta_fte;desc_est_vigencia;reestructurado;fecha_reestrucutrado;plazo;cod_nov_buro_fte;periodo
+1;20098597;0;06;202407;20241031;202708;NN----------------------------------------------;18864000;17292000;0;524000;1;3;6;P;C;;;36;AL DIA;202510
+1;20098597;0;23;201606;20231130;201608;NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN;0;0;0;0;1;;2;P;C;;;;AL DIA;202510
+1;20098597;0;23;202310;20250731;202512;NNNNNNNNNNN--NNNNNNNN---------------------------;0;6000;;6000;1;0;1;P;C;;;;AL DIA;202510
+1;20098597;0;40;201102;20160131;201602;NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN;2561000;0;0;0;9;60;2;P;C;;;60;AL DIA;202510
+1;20098597;0;06;200401;20050131;200501;NNNNNNN-NNNN------------------------------------;2000000;0;0;186000;1;12;2;P;C;;;12;AL DIA;202510
+1;20098597;0;05;200712;20101231;201101;NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN------------;3000000;0;0;0;9;36;2;P;C;;;36;AL DIA;202510
+1;20098597;0;23;201606;20160630;201608;------------------------------------------------;0;0;0;0;1;0;2;P;C;;;0;SIN INFORMACION;202510

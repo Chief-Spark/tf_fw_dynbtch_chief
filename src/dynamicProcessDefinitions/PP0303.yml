@@ -1,0 +1,23 @@
+procesos:
+  directorio:
+    ruta: PP0303
+  niveles:
+    - nivel: 1
+      descripcion: "Generación de tabla de consultas"
+      procedimientos:
+        - step_name: "crear_tabla_consultas"
+          step_procedure: bdm_datos.sp_crear_tabla_consultas
+    # - nivel: 2
+    #   descripcion: "Generación de estadísticas y UNLOAD de la tabla de consultas"
+    #   procedimientos:
+    #     - step_name: "calculate_clt"
+    #       step_procedure: bdm_datos.sp_calculate_ctl_files
+    #       step_description: "Genera estadísticas de la tabla de consultas."
+    #     - step_name: "unload_to_s3"
+    #       step_procedure: bdm_datos.sp_unload_to_s3_prcss_batch
+    #       step_description: "Exporta la tabla de consultas a S3 usando UNLOAD."
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: false

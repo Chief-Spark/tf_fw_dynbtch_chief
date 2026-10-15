@@ -1,0 +1,63 @@
+procesos:
+  directorio:
+    ruta: PP0299
+  niveles:
+    - nivel: 1
+      descripcion: "Preparación de tablas intermedias para el procesamiento de cuentas"
+      procedimientos:
+        - step_name: "crear_sabana_cuentas_con_adjetivos"
+          step_procedure: bdm_datos.sp_crear_sabana_cuentas_con_adjetivos($p_account_status, $generation, $processing_mode)
+          step_description: "Crea la tabla sábana de cuentas con adjetivos utilizando el estado de cuenta, generación y modo de procesamiento."
+        - step_name: "crear_lookup_legal"
+          step_procedure: bdm_datos.sp_crear_lookup_legal()
+          step_description: "Genera la tabla de lookup para información legal."
+        - step_name: "crear_lookup_cuentas_ext"
+          step_procedure: bdm_datos.sp_crear_lookup_cuentas_ext()
+          step_description: "Crea la tabla de lookup para cuentas externas."
+        - step_name: "crear_lookup_subscribers"
+          step_procedure: bdm_datos.sp_crear_lookup_subscribers()
+          step_description: "Genera la tabla de lookup para suscriptores."
+        - step_name: "crear_lookup_trade_holder"
+          step_procedure: bdm_datos.sp_crear_lookup_trade_holder()
+          step_description: "Crea la tabla de lookup para titulares de cuentas comerciales."
+    - nivel: 2
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "enriquecer_y_finalizar_sabana"
+          step_procedure: bdm_datos.sp_enriquecer_y_finalizar_sabana($p_account_status)
+          step_description: "Enriquece y finaliza la tabla sábana incorporando información adicional basada en el estado de cuenta."
+    - nivel: 3
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "vector_extraer_keys"
+          step_procedure: bdm_datos.sp_vector_2_extraer_keys($p_account_status)
+          step_description: "Extrae las claves del vector de información basado en el estado de cuenta."
+        - step_name: "vector_extraer_historial_bruto"
+          step_procedure: bdm_datos.sp_vector_3_extraer_historial_bruto($p_account_status)
+          step_description: "Extrae el historial bruto del vector de información para el procesamiento."
+    - nivel: 4
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "vector_pivotar_comportamiento"
+          step_procedure: bdm_datos.sp_vector_4_pivotar_comportamiento($p_account_status)
+          step_description: "Pivota los datos de comportamiento del vector para generar la estructura final."
+    - nivel: 5
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "vector_ensamblar_final"
+          step_procedure: bdm_datos.sp_vector_5_ensamblar_final($p_account_status)
+          step_description: "Ensambla la versión final del vector con toda la información procesada."
+    - nivel: 6
+      descripcion: "Generación de estadísticas y UNLOAD de la tabla de cuentas"
+      procedimientos:
+        - step_name: "calculate_clt"
+          step_procedure: bdm_datos.calculate_clt($table_name, $table_schema, $period, $bucket_output, $iam_role)
+          step_description: "Genera estadísticas de la tabla de cuentas."
+        - step_name: "unload_to_s3"
+          step_procedure: bdm_datos.unload_to_s3($table_schema, $table_name, $bucket_output, $iam_role, $format, $delimiter, $allow_overwrite, $parallel, $maxfilesize)
+          step_description: "Exporta la tabla de cuentas a S3 usando UNLOAD."
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: false

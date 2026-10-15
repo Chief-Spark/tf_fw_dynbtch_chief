@@ -1,0 +1,49 @@
+procesos:
+  directorio:
+    ruta: PP0742vectorespeergroup
+  niveles:
+    - nivel: 1
+      descripcion: "Carga de archivos insumo"
+      procedimientos:
+        - step_name: "Crear tabla insumo"
+          step_procedure: bdm_datos.sp_cargar_par
+          step_description: "Crea y carga la tabla par."
+        - step_name: "Crear tabla validos"
+          step_procedure: bdm_datos.sp_cargar_validos
+          step_description: "Crea y carga la tabla validos."
+        - step_name: "Crear tabla inconsistentes"
+          step_procedure: bdm_datos.sp_cargar_inc
+          step_description: "Crea y carga la tabla inconsistentes."
+        - step_name: "Crear tabla base entrada"
+          step_procedure: bdm_datos.sp_cargar_baseentrada
+          step_description: "Crea y carga la tabla base entrada."
+    - nivel: 2
+      descripcion: "Calculos"
+      procedimientos:
+        - step_name: "Calculo Proceso PP0742"
+          step_procedure: bdm_datos.sp_pp0742
+          step_description: "Realiza Calculos del proceso PP0742"
+    - nivel: 3
+      descripcion: "Salidas del proceso"
+      procedimientos:
+        - step_name: "Salida 1 Proceso PP0742"
+          step_procedure: bdm_datos.sp_pp0742_out1
+          step_description: "Genera Salida 1 del Proceso PP0742"
+        - step_name: "Salida Inconsistencias Proceso PP0742"
+          step_procedure: bdm_datos.sp_pp0742_out99
+          step_description: "Genera Salida Inconsistencias del Proceso PP0742"
+  archivos:
+    obligatorios:
+      - .val
+      - .PAR
+      - .inc
+      - .BASEENTRADA
+  salidas:
+    aplica: true
+    carpetas:
+      - origen: (PP0742)()(.OUT1)
+        cabeceras: true
+        formato: 
+      - origen: (PP0742)()(.OUT99)
+        cabeceras: true
+        formato: 

@@ -1,0 +1,3 @@
+tipo_id;numero_id;peer_group;cod_tipo_cta_fte;fecha_apertura;fecha_periodos;fecha_vencimiento;vector;valor_inicial;valor_saldo;valor_saldo_mora;valor_cuota_mensual;periodicidad;num_cuotas_pagadas;cod_tipo_obligacion_fte;cod_tipo_rel_con_cta_fte;desc_est_vigencia;reestructurado;fecha_reestrucutrado;plazo;cod_nov_buro_fte;periodo
+1;20098597;0;05;199501;19980131;199801;NNNNNNNNNNNN------------------------------------;;;;;0;;;P;C;;;;AL DIA;202510
+1;20098597;0;06;200312;20050731;200507;NNNNNNNNNNNNN-NNNNN-----------------------------;3000000;0;0;192000;1;18;2;P;C;;;18;AL DIA;202510

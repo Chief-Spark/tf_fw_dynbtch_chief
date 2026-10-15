@@ -1,0 +1,35 @@
+procesos:
+  pipeline: HYBRID
+  directorio:
+    ruta: PE0277
+  niveles:
+    - nivel: 1
+      descripcion: "Obtener clientes fallecidos con status de identidad 21 o 51"
+      procedimientos:
+        - step_name: "obtain_deceased_customers"
+          step_procedure: bdm_datos.PE0277_sp_obtain_desseaced_hb
+          step_description: "Genera tabla temporal con todos los clientes fallecidos"
+    - nivel: 2
+      descripcion: "Se van a extraer todos los consentimientos activos para generar tablas temporables de HYBRID"
+      procedimientos:
+        - step_name: "acquire_customers_with_associated_consents"
+          step_procedure: bdm_datos.PE0277_sp_obtain_consents_hb
+          step_description: "Genera tabla temporal con todos los clientes que tengan consenitmientos asociados"
+    - nivel: 3
+      descripcion: "Cruzar fallecidos con consentimientos activos"
+      procedimientos:
+        - step_name: "cross_reference_deceased_consents"
+          step_procedure: bdm_datos.PE0277_sp_cross_reference_deceased_consents_hb
+          step_description: "Genera tabla temporal con los clientes que aparecen en ambas tablas (mismo numero y tipo de documento)"
+    - nivel: 4
+      descripcion: "Cargar el cruce de fallecidos y consentimientos en s3"
+      procedimientos:
+        - step_name: "unload_cross_reference_s3"
+          step_procedure: bdm_datos.PE0277_sp_unload_Cross_reference_deceased_clients_with_active_consents
+          step_description: "Extrae el resultado del cruce de la tabla temporal y lo carga en s3"
+  salidas:
+    aplica: true
+    carpetas:
+      - origen: (PE0277)()(.HYBRID)
+        cabeceras: true
+        formato: csv

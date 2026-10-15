@@ -1,0 +1,268 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2">
+  <diagram name="Flujo-Detallado" id="flujo-detallado-ejecucion-exitosa">
+    <mxGraphModel dx="1678" dy="989" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Flujo Detallado - Ejecución Exitosa del Framework de Procesos Batch" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="600" y="20" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="s3-sources" value="S3 Bucket&#xa;Fuentes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="150" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sqs" value="SQS&#xa;Queue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="450" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="main-initiator" value="Main Batch&#xa;Initiator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="600" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="step-function" value="Main Batch&lt;div&gt;Step Function&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="750" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="validator" value="Source&#xa;Validator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="900" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="builder" value="Batch&#xa;Builder" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="1050" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="redshift" value="Redshift&#xa;Data API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="1320" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="notifier" value="Batch&#xa;Notifier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="1470" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ses" value="SES&#xa;Email" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="1620" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lifeline-operador" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="65" y="160" as="sourcePoint" />
+            <mxPoint x="65" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-s3" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="160" as="sourcePoint" />
+            <mxPoint x="200" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-sqs" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="160" as="sourcePoint" />
+            <mxPoint x="500" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-initiator" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="160" as="sourcePoint" />
+            <mxPoint x="650" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-stepfunc" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="160" as="sourcePoint" />
+            <mxPoint x="800" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-validator" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="950" y="160" as="sourcePoint" />
+            <mxPoint x="950" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-builder" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1100" y="160" as="sourcePoint" />
+            <mxPoint x="1100" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-redshift" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1370" y="160" as="sourcePoint" />
+            <mxPoint x="1370" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-notifier" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1520" y="160" as="sourcePoint" />
+            <mxPoint x="1520" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lifeline-ses" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1670" y="160" as="sourcePoint" />
+            <mxPoint x="1670" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg1" value="1. Upload archivo .val" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="65" y="200" as="sourcePoint" />
+            <mxPoint x="200" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2" value="2. S3 Event Notification" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="240" as="sourcePoint" />
+            <mxPoint x="500" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3" value="3. SQS Message Trigger" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500" y="280" as="sourcePoint" />
+            <mxPoint x="650" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4" value="7. Extract Product ID from path" style="endArrow=classic;html=1;rounded=0;align=left;edgeStyle=orthogonalEdgeStyle;" parent="1" edge="1">
+          <mxGeometry x="-1" y="10" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="470" as="sourcePoint" />
+            <mxPoint x="650" y="510" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="730" y="471" />
+              <mxPoint x="730" y="510" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5" value="8. Start Step Function" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="560" as="sourcePoint" />
+            <mxPoint x="800" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6" value="9. Validate Sources" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="600" as="sourcePoint" />
+            <mxPoint x="950" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7" value="10. Read Definition Files" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="650" as="sourcePoint" />
+            <mxPoint x="350" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8" value="11. Validation Success" style="endArrow=classic;html=1;rounded=0;dashed=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="950" y="700" as="sourcePoint" />
+            <mxPoint x="800" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9" value="12. Build Dynamic Batch" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="750" as="sourcePoint" />
+            <mxPoint x="1100" y="750" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10" value="13. Generate Dynamic SF" style="endArrow=classic;html=1;rounded=0;align=left;" parent="1" edge="1">
+          <mxGeometry x="-0.8522" y="10" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1100" y="790" as="sourcePoint" />
+            <mxPoint x="1240" y="790" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg11" value="16. Execute Stored Procedures" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0769" y="10" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1240" y="920" as="sourcePoint" />
+            <mxPoint x="1370" y="920" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg12" value="17. Processing Complete" style="endArrow=classic;html=1;rounded=0;dashed=1;" parent="1" edge="1">
+          <mxGeometry x="-0.0769" y="-10" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1370" y="970" as="sourcePoint" />
+            <mxPoint x="1240" y="970" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg13" value="18. Batch Complete" style="endArrow=classic;html=1;rounded=0;dashed=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1240" y="1000" as="sourcePoint" />
+            <mxPoint x="800" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg14" value="19. Trigger Notifier" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="1040" as="sourcePoint" />
+            <mxPoint x="1520" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg15" value="20. Send Success Email" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry x="0.0667" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1520" y="1080" as="sourcePoint" />
+            <mxPoint x="1670" y="1080" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg16" value="16. Email Delivered" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1675" y="1130" as="sourcePoint" />
+            <mxPoint x="70" y="1130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note1" value="Nota: El Product ID se extrae&#xa;de la estructura de carpetas&#xa;usando regex pattern" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" parent="1" vertex="1">
+          <mxGeometry x="440" y="450" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="note2" value="Nota: Las Step Functions&#xa;dinámicas se generan en&#xa;tiempo de ejecución basadas&#xa;en las definiciones .yml" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" parent="1" vertex="1">
+          <mxGeometry x="590" y="710" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="note3" value="Nota: Los parámetros de SP&#xa;son fijos: id_solicitud y&#xa;nit_cliente (obtenido de&#xa;mnemotecnicos.csv)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" parent="1" vertex="1">
+          <mxGeometry x="1020" y="880" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-1" value="Child Batch&lt;div&gt;Step Function&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fillColor=#e1d5e7;strokeColor=#000000;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1240" y="160" as="sourcePoint" />
+            <mxPoint x="1240" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-3" value="4. Trigger Notifier" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="650" y="320" as="sourcePoint" />
+            <mxPoint x="1520" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-4" value="5. Send Start Email" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.0667" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1520" y="360" as="sourcePoint" />
+            <mxPoint x="1670" y="360" as="targetPoint" />
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-5" value="6. Email Delivered" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1670" y="410" as="sourcePoint" />
+            <mxPoint x="66" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-6" value="S3 Bucket&lt;br&gt;Definiciones" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="300" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-7" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="160" as="sourcePoint" />
+            <mxPoint x="350" y="1200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-8" value="14. Build Success" style="endArrow=classic;html=1;rounded=0;dashed=1;" edge="1" parent="1">
+          <mxGeometry x="0.0667" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1100" y="820" as="sourcePoint" />
+            <mxPoint x="800" y="820" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-9" value="15. Lauch Dynamic Batch" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry x="-0.0667" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="870" as="sourcePoint" />
+            <mxPoint x="1240" y="870" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g9SwkXOGXFF6vuHpXBq5-10" value="Operador" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="60" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,66 @@
+procesos:
+  directorio:
+    ruta: PP0298
+  niveles:
+    - nivel: 1
+      descripcion: "Preparación de tablas intermedias para el procesamiento de cuentas"
+      procedimientos:
+        - step_name: "crear_sabana_cuentas_con_adjetivos_motor"
+          step_procedure: bdm_datos.sp_crear_sabana_cuentas_con_adjetivos_motor
+          step_description: "Crea la tabla sábana de cuentas con adjetivos para motor utilizando el estado de cuenta, generación y modo de procesamiento."
+        - step_name: "crear_lookup_legal"
+          step_procedure: bdm_datos.sp_crear_lookup_legal
+          step_description: "Genera la tabla de lookup para información legal."
+        - step_name: "crear_lookup_cuentas_ext"
+          step_procedure: bdm_datos.sp_crear_lookup_cuentas_ext
+          step_description: "Crea la tabla de lookup para cuentas externas."
+        - step_name: "crear_lookup_subscribers"
+          step_procedure: bdm_datos.sp_crear_lookup_subscribers
+          step_description: "Genera la tabla de lookup para suscriptores."
+        - step_name: "crear_lookup_trade_holder_motor"
+          step_procedure: bdm_datos.sp_crear_lookup_trade_holder_motor
+          step_description: "Crea la tabla de lookup para titulares de cuentas comerciales específica para motor."
+    - nivel: 2
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "enriquecer_y_finalizar_sabana_motor"
+          step_procedure: bdm_datos.sp_enriquecer_y_finalizar_sabana_motor
+          step_description: "Enriquece y finaliza la tabla sábana para motor incorporando información adicional basada en el estado de cuenta."
+    - nivel: 3
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "vector_extraer_keys_motor"
+          step_procedure: bdm_datos.sp_vector_2_extraer_keys_motor
+          step_description: "Extrae las claves del vector de información para motor basado en el estado de cuenta."
+        - step_name: "vector_extraer_historial_bruto_motor"
+          step_procedure: bdm_datos.sp_vector_3_extraer_historial_bruto_motor
+          step_description: "Extrae el historial bruto del vector de información para motor en el procesamiento."
+    - nivel: 4
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "vector_pivotar_comportamiento_motor"
+          step_procedure: bdm_datos.sp_vector_4_pivotar_comportamiento_motor
+          step_description: "Pivota los datos de comportamiento del vector para motor y generar la estructura final."
+    - nivel: 5
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "vector_ensamblar_final_motor"
+          step_procedure: bdm_datos.sp_vector_5_ensamblar_final_motor
+          step_description: "Ensambla la versión final del vector para motor con toda la información procesada."
+    - nivel: 6
+      descripcion: "Construcción de tablas finales de cuentas"
+      procedimientos:
+        - step_name: "crear_tabla_cuentas_habilitadas"
+          step_procedure: bdm_datos.sp_vector_6_crear_tabla_cuentas_habilitadas
+          step_description: "Crea la tabla de cuentas habilitadas con la información procesada."
+        - step_name: "crear_tabla_cuentas_inhabilitadas"
+          step_procedure: bdm_datos.sp_vector_6_crear_tabla_cuentas_inhabilitadas
+          step_description: "Crea la tabla de cuentas inhabilitadas con la información procesada."
+        - step_name: "crear_tabla_cuentas_motor"
+          step_procedure: bdm_datos.sp_vector_6_crear_tabla_cuentas_motor
+          step_description: "Crea la tabla final de cuentas motor consolidando toda la información procesada."
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: false

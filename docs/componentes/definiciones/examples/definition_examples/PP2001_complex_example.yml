@@ -1,0 +1,82 @@
+# Ejemplo de Proceso Complejo - Múltiples Niveles y Paralelización
+# Proceso: PP2001 - Análisis Financiero Completo
+# Descripción: Proceso avanzado con carga, validación, cálculos paralelos y múltiples salidas
+
+procesos:
+  directorio:
+    ruta: PP2001analisisfinanciero
+  niveles:
+    - nivel: 1
+      descripcion: "Carga inicial de todos los archivos"
+      procedimientos:
+        - step_name: "Cargar parámetros de configuración"
+          step_procedure: bdm_datos.sp_cargar_par
+          step_description: "Carga archivo .par con parámetros del análisis"
+        - step_name: "Cargar datos financieros válidos"
+          step_procedure: bdm_datos.sp_cargar_validos
+          step_description: "Carga archivo .val con datos financieros principales"
+        - step_name: "Cargar datos inconsistentes"
+          step_procedure: bdm_datos.sp_cargar_inconsistentes
+          step_description: "Carga archivo .inc con datos que requieren revisión"
+    - nivel: 2
+      descripcion: "Validación y preparación de datos"
+      procedimientos:
+        - step_name: "Validar integridad de datos"
+          step_procedure: bdm_datos.validate_data_integrity
+          step_description: "Valida consistencia y completitud de datos cargados"
+        - step_name: "Preparar datos para análisis"
+          step_procedure: bdm_datos.prepare_analysis_data
+          step_description: "Prepara y normaliza datos para cálculos financieros"
+    - nivel: 3
+      descripcion: "Cálculos financieros en paralelo"
+      procedimientos:
+        - step_name: "Calcular indicadores de liquidez"
+          step_procedure: bdm_datos.calculate_liquidity_ratios
+          step_description: "Calcula ratios de liquidez corriente y ácida"
+        - step_name: "Calcular indicadores de rentabilidad"
+          step_procedure: bdm_datos.calculate_profitability_ratios
+          step_description: "Calcula ROE, ROA y margen de utilidad"
+        - step_name: "Calcular indicadores de endeudamiento"
+          step_procedure: bdm_datos.calculate_debt_ratios
+          step_description: "Calcula ratios de endeudamiento y cobertura"
+        - step_name: "Generar scoring crediticio"
+          step_procedure: bdm_datos.calculate_credit_scoring
+          step_description: "Genera puntuación crediticia basada en indicadores"
+    - nivel: 4
+      descripcion: "Consolidación y exportación de resultados"
+      procedimientos:
+        - step_name: "Consolidar análisis financiero"
+          step_procedure: bdm_datos.consolidate_financial_analysis
+          step_description: "Consolida todos los indicadores en reporte unificado"
+        - step_name: "Exportar indicadores de liquidez"
+          step_procedure: bdm_datos.unload_liquidity_to_s3
+          step_description: "Exporta indicadores de liquidez a archivo CSV"
+        - step_name: "Exportar indicadores de rentabilidad"
+          step_procedure: bdm_datos.unload_profitability_to_s3
+          step_description: "Exporta indicadores de rentabilidad a archivo CSV"
+        - step_name: "Exportar scoring crediticio"
+          step_procedure: bdm_datos.unload_credit_scoring_to_s3
+          step_description: "Exporta scoring crediticio a archivo especializado"
+        - step_name: "Exportar resumen ejecutivo"
+          step_procedure: bdm_datos.unload_executive_summary_to_s3
+          step_description: "Exporta resumen ejecutivo para alta gerencia"
+  archivos:
+    obligatorios:
+      - .val
+      - .par
+      - .inc
+  salidas:
+    aplica: true
+    carpetas:
+      - origen: (PP2001)(.LIQUIDEZ)(OUT)
+        cabeceras: true
+        formato: csv
+      - origen: (PP2001)(.RENTABILIDAD)(OUT)
+        cabeceras: true
+        formato: csv
+      - origen: (PP2001)(.SCORING)(OUT)
+        cabeceras: true
+        formato: csv
+      - origen: (PP2001)()(_RESUMEN_EJECUTIVO)
+        cabeceras: false
+        formato: dat

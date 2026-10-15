@@ -1,0 +1,27 @@
+procesos:
+  directorio:
+    ruta: PP0302
+  niveles:
+    - nivel: 1
+      descripcion: "Generación de tablas intermedias en paralelo para demográficos"
+      procedimientos:
+        - step_name: "crear_tabla_typeOfData3"
+          step_procedure: bdm_datos.sp_crear_tabla_typeOfData3
+          step_description: "Crea la tabla intermedia para typeOfData3 (Maestro de Clientes)"
+        - step_name: "crear_tabla_typeOfData10"
+          step_procedure: bdm_datos.sp_crear_tabla_typeOfData10
+          step_description: "Crea la tabla intermedia para typeOfData10 (Registraduría)"
+    - nivel: 2
+      descripcion: "Unificación de resultados y generación de tabla final de demográficos"
+      procedimientos:
+        - step_name: "crear_tabla_sabana_demografico"
+          step_procedure: bdm_datos.sp_crear_tabla_sabana_demografico
+          step_description: "Crea la tabla final bdm_tempo.sabana_demografico unificando los resultados de typeOfData3 y typeOfData10."
+        - step_name: "crear_tabla_sabana_demografico_motor"
+          step_procedure: bdm_datos.sp_crear_tabla_sabana_demografico_motor
+          step_description: "Crea la tabla final bdm_tempo.sabana_demografico_motor unificando los resultados de typeOfData3 y typeOfData10."
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: false

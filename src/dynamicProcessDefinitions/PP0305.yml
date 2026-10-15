@@ -1,0 +1,24 @@
+procesos:
+  directorio:
+    ruta: PP0305
+  niveles:
+    - nivel: 1
+      descripcion: "Generación de tabla de catalogo_cuentas_ext"
+      procedimientos:
+        - step_name: "crear_tabla_catalogo_cuentas_ext"
+          step_procedure: bdm_datos.sp_crear_tabla_catalogo_cuentas_ext
+          step_description: "Crea la tabla de catalogo_cuentas_ext."
+    - nivel: 2
+      descripcion: "Generación de estadísticas y UNLOAD de la tabla de catalogo_cuentas_ext"
+      procedimientos:
+        - step_name: "calculate_clt"
+          step_procedure: bdm_datos.sp_calculate_ctl_files
+          step_description: "Genera estadísticas de la tabla de catalogo_cuentas_ext."
+        - step_name: "unload_to_s3"
+          step_procedure: bdm_datos.sp_unload_to_s3_prcss_batch
+          step_description: "Exporta la tabla de catalogo_cuentas_ext a S3 usando UNLOAD."
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: false

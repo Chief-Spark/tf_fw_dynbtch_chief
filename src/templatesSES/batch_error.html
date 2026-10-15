@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <title>Error en Procesamiento</title>
+                <style>
+                    body {{ font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }}
+                    .container {{ max-width: 600px; margin: 0 auto; background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
+                    .header {{ background-color: #dc3545; color: white; padding: 20px; border-radius: 8px 8px 0 0; }}
+                    .content {{ padding: 20px; }}
+                    .footer {{ background-color: #f8f9fa; padding: 15px; border-radius: 0 0 8px 8px; text-align: center; font-size: 12px; color: #666; }}
+                    .error-icon {{ font-size: 48px; color: #dc3545; text-align: center; margin: 20px 0; }}
+                    .error-details {{ background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 10px; margin: 15px 0; }}
+                    .attachment-notice {{ background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 10px; margin: 15px 0; }}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>❌ Error en Procesamiento</h1>
+                    </div>
+                    <div class="content">
+                        <p>Estimado usuario,</p>
+                        <p>Se ha producido un error durante el procesamiento por lotes <strong>{batch_id}</strong>.</p>
+                        {body}
+                        <div class="error-details">
+                            <strong>Detalles del error:</strong><br>
+                            {error_details}
+                        </div>
+                        {attachment_section}
+                        <p>Por favor, revise los logs adjuntos para más información.</p>
+                        <p>Saludos cordiales,<br>Sistema de Procesamiento por Lotes</p>
+                    </div>
+                    <div class="footer">
+                        <p>Este es un mensaje automático del sistema.</p>
+                        <p>Fecha: {timestamp}</p>
+                    </div>
+                </div>
+            </body>
+            </html>

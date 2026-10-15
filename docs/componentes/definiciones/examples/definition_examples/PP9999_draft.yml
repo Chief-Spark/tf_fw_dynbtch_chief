@@ -1,0 +1,63 @@
+procesos:
+  directorio:
+    ruta: PP0989calculodeudas
+  niveles:
+    - nivel: 1
+      descripcion: "Carga de archivos insumo"
+      procedimientos:
+        - step_name: "Crear tabla insumo"
+          step_procedure: bdm_datos.sp_cargar_par
+          step_description: "Crea y carga la tabla par."
+        - step_name: "Crear tabla validos"
+          step_procedure: bdm_datos.sp_cargar_validos
+          step_description: "Crea y carga la tabla validos."
+        - step_name: "Crear tabla inconsistentes"
+          step_procedure: bdm_datos.sp_cargar_inconsistentes
+          step_description: "Crea y carga la tabla inconsistentes."
+    - nivel: 2
+      descripcion: "Realiza calculo paralelo"
+      procedimientos:
+        - step_name: "calculate_clt"  
+          step_procedure: bdm_datos.calculate_clt
+          step_description: "Genera estadísticas."
+        - step_name: "calculate_rtx"
+          step_procedure: bdm_datos.calculate_rtx
+          step_description: "Genera estadísticas."
+        - step_name: "calculate_scr"
+          step_procedure: bdm_datos.calculate_scr
+          step_description: "Genera estadísticas."
+    - nivel: 3
+      descripcion: "Genera salidas"
+      procedimientos:
+        - step_name: "unload_clt_to_s3"
+          step_procedure: bdm_datos.unload_clt_to_s3
+          step_description: "Exporta la tabla de clt a S3 usando UNLOAD."
+        - step_name: "unload_rtx_to_s3"
+          step_procedure: bdm_datos.unload_rtx_to_s3
+          step_description: "Exporta la tabla de rtx a S3 usando UNLOAD."
+        - step_name: "unload_scr_to_s3"
+          step_procedure: bdm_datos.unload_scr_to_s3
+          step_description: "Exporta la tabla de scr a S3 usando UNLOAD."
+        - step_name: "unload_summary_to_s3"
+          step_procedure: bdm_datos.unload_summary_to_s3
+          step_description: "Exporta la tabla de summary a S3 usando UNLOAD."
+  archivos:
+    obligatorios:
+      - .val
+      - .par
+      - .inc
+  salidas:
+    aplica: true
+    carpetas:
+      - origen: (PP0989)(.PP0810)(OUT1)
+        cabeceras: true
+        formato: csv
+      - origen: (PP0989)(.PP0810)(OUT2)
+        cabeceras: true
+        formato: csv
+      - origen: (PP0989)(.PP0504)(OUT1)
+        cabeceras: true
+        formato: dat
+      - origen: (PP0989)()(_RESUMEN)
+        cabeceras: false
+        formato: csv

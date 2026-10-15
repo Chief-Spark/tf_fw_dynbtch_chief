@@ -1,0 +1,176 @@
+# =========================
+# Terraform
+# =========================
+**/.terraform/*
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+# Archivos de override locales
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+# Archivos de plan
+*tfplan*
+# Configuración CLI
+.terraformrc
+terraform.rc
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+*.mo
+*.pot
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
+.scrapy
+docs/_build/
+.pybuilder/
+target/
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+__pypackages__/
+celerybeat-schedule
+celerybeat.pid
+*.sage.py
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.spyderproject
+.spyproject
+.ropeproject
+site/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+poetry.toml
+.ruff_cache/
+
+# =========================
+# Lambda Dependencies (instaladas por scripts/install-lambda-deps.sh en el pipeline)
+# =========================
+# Las dependencias NO se commitean - se instalan automáticamente en Jenkins
+# Esto asegura que siempre se usen los binarios correctos para Python 3.13 ARM64
+src/**/.venv_build/
+src/**/pydantic/
+src/**/pydantic_core/
+src/**/pydantic_settings/
+src/**/yaml/
+src/**/_yaml/
+src/**/annotated_types/
+src/**/typing_extensions.py
+src/**/typing_inspection/
+src/**/dotenv/
+src/**/bin/dotenv.exe
+src/**/__pycache__/
+src/**/*.pyc
+src/**/*.dist-info/
+pyrightconfig.json
+
+# =========================
+# PowerShell y Shell Scripts
+# =========================
+# (No suelen generar archivos temporales, pero puedes agregar aquí si tus scripts lo hacen)
+
+# =========================
+# IDEs y herramientas de desarrollo
+# =========================
+.vscode/
+.kiro/
+.cursor/
+.DS_Store
+# PyCharm y JetBrains (ver plantilla oficial para más detalles)
+idea/
+
+# =========================
+# Experian: reglas adicionales y archivos no versionables
+# =========================
+.scannerwork/
+target/
+*.classpath
+*.project
+.settings/
+*.bak
+*.orig
+*.7z
+*.zip
+
+# =========================
+# Lambda Layers y artefactos generados
+# =========================
+# Excluir directorios temporales de instalación
+src/layers/*/layer/
+src/layers/*/venv/
+src/layers/*/__pycache__/
+
+# INCLUIR explícitamente los archivos versionados del layer
+!src/layers/*.zip
+!src/layers/**/*.zip
+!assets/translator/lambda-bootstrap.zip
+
+# Python portable solo para build local del layer
+.tools/
+
+# =========================
+# Notas / handoff locales (no versionables)
+# =========================
+HANDOFF_*.md
+
+# Contexto local (docs, snapshots, módulos de referencia para IA / integración)
+.context/
+
+# Tests (pendiente de versionar)
+tests/

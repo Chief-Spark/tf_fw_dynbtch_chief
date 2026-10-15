@@ -1,0 +1,84 @@
+# PP9991 — Batch diario Triggers (Redshift SPs)
+# Pre-batch (fuera de este YAML): Huellas/ICBCON — wait-icbcon, S3→staging, vista ale_vista.vc_huellas_triggers
+# Post-batch (fuera de Redshift): gzip S3, FTP/SFTP (Transfer Family), Secure Transport Map (Lambda + Step Functions)
+# PAR: carga unica en nivel 1; loops por NIT dentro de sp_orquestar_alertas_triggers (MDT calificar/facturar)
+# Salidas: nombres NIT-based independientes del .val -> ver flag `descubrir` en la seccion salidas.
+
+procesos:
+  directorio:
+    ruta: PP9991
+
+  niveles:
+    - nivel: 1
+      descripcion: "Carga inicial de datos"
+      procedimientos:
+        - step_name: "Cargar archivo Parametros"
+          step_procedure: ale_datos.sp_triggers_carga_par
+          step_description: "Carga datos del archivo .par desde S3 → ale_tempo.triggers_{sol}_par (unica carga PAR por solicitud)"
+
+    - nivel: 2
+      descripcion: "Fuentes: Inactivos"
+      procedimientos:
+        - step_name: "Cargue clientes monitoreados inactivos"
+          step_procedure: ale_datos.sp_cargue_clientes_monitoreados_inactivos
+          step_description: "Realiza carga de clientes monitoreados inactivos"
+
+    - nivel: 3
+      descripcion: "Fuentes: Personas"
+      procedimientos:
+        - step_name: "Generar Tabla de Personas"
+          step_procedure: ale_mtdat.sp_tabla_personas_triggers
+          step_description: "Genera tabla de personas para triggers"
+
+    - nivel: 4
+      descripcion: "Fuentes: Suscriptores, Scores, Cuentas"
+      procedimientos:
+        - step_name: "Generar Tablas de Suscriptores"
+          step_procedure: ale_datos.sp_merge_suscriptores
+          step_description: "Merge suscriptores desde BDM_STAGE"
+        - step_name: "Generar Tablas de Score"
+          step_procedure: ale_mtdat.sp_tabla_scores_triggers
+          step_description: "Genera tabla de scores (condicional malla/calendario en TD)"
+        - step_name: "Generar Tablas de Ctas Pasivo"
+          step_procedure: ale_mtdat.sp_tabla_cteyaho_triggers
+          step_description: "Genera tabla cuentas pasivo/ahorro (condicional malla/calendario en TD)"
+        - step_name: "Generar Tablas de Ctas Activo"
+          step_procedure: ale_mtdat.sp_tabla_valores_ctra_triggers
+          step_description: "Genera tabla valores cartera activo (condicional malla/calendario en TD)"
+
+    - nivel: 5
+      descripcion: "Alertas — Orquestador (PASO 0-4 Ejecucion-Alertas.sh)"
+      procedimientos:
+        - step_name: "Orquestar Alertas Triggers"
+          step_procedure: ale_datos.sp_orquestar_alertas_triggers
+          step_description: "Encapsula: sp_consolida_clientes_alertas, sp_actualiza_nombre_cliente, sp_consolidado, sp_ejecutar_alertas_triggers (loop CALCULA_ALR*), sp_mdt_calificar_triggers (sp_mdt_califica + sp_mdt_reporte_valor por NIT), sp_mdt_facturar_triggers (sp_mdt_reporte_trigger por NIT), sp_mdt_depurar_resumen, sp_reporte_sqldinamico. NO invoca sp_salidas_triggers: el UNLOAD vive como paso propio en nivel 6 para tener trazabilidad en la Step Function"
+
+    - nivel: 6
+      descripcion: "Salidas (UNLOAD a S3) y materializacion WS"
+      procedimientos:
+        - step_name: "Generar Salidas"
+          step_procedure: ale_datos.sp_salidas_triggers
+          step_description: "UNLOAD de los reportes RPT a mergeTemp/{paquete}/{nombreFinal}/ — un nombre NIT-based por reporte, unificado luego por el Glue en modo descubrimiento"
+        - step_name: "Materializar Alertas WS"
+          step_procedure: ale_datos.sp_materializa_alertas_ws
+          step_description: "Materializa alertas WS"
+
+  archivos:
+    obligatorios:
+      - .val
+      # nivel 1 (sp_triggers_carga_par) carga ale_tempo.triggers_{sol}_par desde este archivo;
+      # sin el .par el batch arranca y muere en nivel 1. Business_Table lo marca OBLIGATORIO=1.
+      - .par
+
+  salidas:
+    # CSV generados por sp_salidas_triggers (UNLOAD S3) en el nivel 6.
+    aplica: true
+    # Modo descubrimiento: la cantidad de salidas es dinamica (N NITs) y sus nombres son
+    # independientes del .val, por lo que no se pueden precalcular en el build. El Glue lista
+    # las subcarpetas inmediatas de mergeTemp/{name_without_extension}/ y unifica cada una.
+    descubrir: true
+    carpetas:
+      - origen: (PP9991)()(.OUT1)
+        cabeceras: true
+        formato:
+

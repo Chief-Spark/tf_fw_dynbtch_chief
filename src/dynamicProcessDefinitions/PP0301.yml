@@ -1,0 +1,33 @@
+procesos:
+  directorio:
+    ruta: PP0301
+  niveles:
+    - nivel: 1
+      descripcion: "Generación de tablas intermedias en paralelo para personas"
+      procedimientos:
+        - step_name: "crear_tabla_personas_final"
+          step_procedure: bdm_datos.sp_crear_tabla_personas_final
+          step_description: "Crea la tabla temporal de personas finales."
+        - step_name: "crear_tabla_personas_final_bestname"
+          step_procedure: bdm_datos.sp_crear_tabla_personas_final_bestname
+          step_description: "Crea la tabla temporal de nombres y datos personales."
+    - nivel: 2
+      descripcion: "Unificación y generación de tabla final de personas"
+      procedimientos:
+        - step_name: "crear_tabla_sabana_personas"
+          step_procedure: bdm_datos.sp_crear_tabla_sabana_personas
+          step_description: "Crea la tabla final de personas."
+    - nivel: 3
+      descripcion: "Generación de estadísticas y UNLOAD de la tabla de personas"
+      procedimientos:
+        - step_name: "calculate_clt"
+          step_procedure: bdm_datos.sp_calculate_ctl_files
+          step_description: "Genera estadísticas de la tabla de personas."
+        - step_name: "unload_to_s3"
+          step_procedure: bdm_datos.sp_unload_to_s3_prcss_batch
+          step_description: "Exporta la tabla de personas a S3 usando UNLOAD."
+  archivos:
+    obligatorios:
+      - .val
+  salidas:
+    aplica: false
