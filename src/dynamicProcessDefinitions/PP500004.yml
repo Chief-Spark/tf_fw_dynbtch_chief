@@ -1,0 +1,87 @@
+# PP500004 - Explotacion Reconocer / producto Conocimiento del cliente
+#
+# Dado un .val con una lista de documentos (tipo y numero), los SP de
+# bdm_tempo buscan en las 7 tablas MAT lo que pide cada columna del Excel del
+# producto y hacen UNLOAD de un CSV por hoja.
+#
+# Las tres hojas PARTICIONAN el .val: cada documento cae en exactamente un
+# estado de bdm_datos.exp_solicitud_resuelta (CON_UBICACION, SIN_UBICACION o
+# INCONSISTENTE), asi que las tres salidas suman los documentos pedidos.
+#
+# El nivel 1 es comun a los siete productos: sp_exp_cargar_solicitud deduce el
+# producto de in_path_archivo, que trae la carpeta S3 del .val.
+#
+# TRES COSAS QUE TIENEN QUE CUADRAR CON EL CODIGO DE LOS SP:
+#   1. cabeceras: true, porque el UNLOAD lleva HEADER. Si no coinciden, se
+#      duplican cabeceras a mitad de fichero o se pierde la primera fila.
+#   2. El sufijo de salidas.carpetas[].origen es el mismo literal que pasa
+#      cada SP a bdm_datos.exp_unload. El Builder lo convierte en la carpeta
+#      mergeTemp/<nemotecnico><solicitud>-<facturacion>-<fecha>_<sufijo>/ y el
+#      Glue busca ahi: si no coinciden, no encuentra nada.
+#   3. El primer grupo de origen debe ser PP/PE seguido de DIGITOS, o el
+#      Builder aborta con FolderPathSuffixBuildError.
+#
+# La carpeta del .val tiene que contener PP500004: el Builder extrae de ahi el
+# product_id y carga la definicion como "PP500004.yml".
+# El client_id del nombre del .val debe casar ([\D]+val) -- sin digitos antes
+# de 'val' -- y tener su fila en mnemotecnicos.csv.
+#
+# NOTA: el Glue del Framework CONCATENA BYTES, no produce .xlsx. La salida son
+# tres CSV; el libro de tres hojas necesita un paso fuera de este Framework.
+#
+# pipeline RECONOCER: el destino esta COMENTADO en
+# develop/terraform.tfvars:79-89. Sin descomentarlo el Builder cae al default
+# ALPHA, donde estos SP no existen.
+
+procesos:
+  pipeline: RECONOCER
+  directorio:
+    ruta: PP500004conocimiento
+
+  niveles:
+    - nivel: 1
+      descripcion: "Carga de la solicitud"
+      procedimientos:
+        - step_name: "cargar_solicitud"
+          step_procedure: bdm_tempo.sp_exp_cargar_solicitud
+          step_description: "Carga el .val desde S3 y resuelve cada documento contra las tablas MAT"
+
+    - nivel: 2
+      descripcion: "Con Datos Ubicacion"
+      procedimientos:
+        - step_name: "con_datos_ubicacion"
+          step_procedure: bdm_tempo.sp_conocimiento_cliente_con_datos
+          step_description: "Genera el CSV de los datos basicos incluyendo datos de ubicacion"
+
+    - nivel: 3
+      descripcion: "Sin Datos Ubicacion"
+      procedimientos:
+        - step_name: "sin_datos_ubicacion"
+          step_procedure: bdm_tempo.sp_conocimiento_cliente_sin_datos
+          step_description: "Genera el CSV de los datos basicos sin incluir datos de ubicacion"
+
+    - nivel: 4
+      descripcion: "Inconsistencias"
+      procedimientos:
+        - step_name: "inconsistencias"
+          step_procedure: bdm_tempo.sp_conocimiento_cliente_inconsistencias
+          step_description: "Genera el CSV con los documentos que no se pudieron atender"
+
+  archivos:
+    obligatorios:
+      - .val
+
+  salidas:
+    # aplica: true con al menos una carpeta es lo que hace que el Builder cree
+    # el estado del Glue. Con aplica: false nada se consolida ni se entrega.
+    aplica: true
+    carpetas:
+      - origen: (PP500004)()(.CONDATOS)
+        cabeceras: true
+        formato: csv
+      - origen: (PP500004)()(.SINDATOS)
+        cabeceras: true
+        formato: csv
+      - origen: (PP500004)()(.INCONSIS)
+        cabeceras: true
+        formato: csv
